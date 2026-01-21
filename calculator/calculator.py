@@ -3,6 +3,18 @@ def add():
     b = int(input("Enter first number: "))
 
     print(f'{a} + {b} = {a + b}')
+    
+def multiply():
+    a = int(input("Enter first number: "))
+    b = int(input("Enter first number: "))
+
+    print(f'{a} x {b} = {a * b}')
+
+def divide():
+    a = float(input("Enter first number: "))
+    b = float(input("Enter second number: "))
+
+    print(f'{a} / {b} = {a / b}')
 
 while True:
     try:
