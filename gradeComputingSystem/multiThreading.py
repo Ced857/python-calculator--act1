@@ -10,7 +10,7 @@ def compute_gwa(grades):
 if __name__ == "__main__":
     grades_list = []
 
-    for i in range(5):
+    for i in range(4):
         grades = int(input("Enter grades: "))
         
         grades_list.append(grades)

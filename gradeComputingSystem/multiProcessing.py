@@ -12,7 +12,7 @@ def compute_gwa_mp(grades):
 if __name__ == "__main__":
     grades_list = [] # Replace with user input
 
-    for i in range(5):
+    for i in range(4):
         grades = int(input("Enter grades: "))
         grades_list.append(grades)
 
@@ -35,4 +35,4 @@ if __name__ == "__main__":
 
     execution_time = time_end - time_start
 
-    print(f'Excecution time {execution_time}')
+    print(f'Execution time {execution_time}')
