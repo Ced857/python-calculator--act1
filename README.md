@@ -1,4 +1,5 @@
-# python-calculator--act1
+# First Laboratory
+Python Calculator
 # Second Labaratory
 1. Which approach demonstrates true parallelism in Python? Explain.
 
@@ -102,14 +103,14 @@ True parallelism occurs, fully utilizing multiple CPU cores for data parallel ta
 4. Explain why ProcessPoolExecutor enables true parallelism, including memory
 space separation and GIL behavior.
 
-Ans:
+Ans:ProcessPoolExecutor enables true parallelism because it creates separate processes instead of threads. Each process runs in its own memory space and has its own Python interpreter, which means each one also has its own Global Interpreter Lock (GIL). Since the GIL only restricts threads within the same process, using multiple processes allows the program to fully utilize multiple CPU cores at the same time. In our Data_Parallelism.py file, each employee’s payroll computation runs independently in separate processes, which makes true parallel execution possible, especially for CPU-bound tasks like salary calculations.
 
 5. Evaluate scalability if the system increases from 5 to 10,000 employees. Which
 approach scales better and why?
 
-Ans:
+Ans:If the system increases from 5 to 10,000 employees, Data Parallelism using ProcessPoolExecutor scales much better. This is because the payroll computation for each employee is independent, so the workload can be divided efficiently across multiple CPU cores. As the number of employees grows, processes can distribute the tasks and process them concurrently. In contrast, Task Parallelism only parallelizes deduction types for one employee at a time. That approach does not significantly improve performance when the dataset becomes very large, so it is not ideal for large-scale payroll systems.
 
 6. Provide a real-world payroll system example. Indicate where Task Parallelism and
 Data Parallelism would be applied, and which executor you would use.
 
-Ans:
+Ans:In a real-world payroll system, Task Parallelism can be applied when computing different salary components for a single employee, such as government deductions, company benefits, bonuses, and taxes simultaneously. In this case, ThreadPoolExecutor may be used, especially if some computations involve database or API calls (I/O-bound tasks). On the other hand, Data Parallelism would be used when processing payroll for thousands of employees at once, since each employee’s payroll is independent. For this scenario, ProcessPoolExecutor is more appropriate because it allows true parallelism across CPU cores and handles large-scale computations more efficiently.
