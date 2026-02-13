@@ -24,3 +24,92 @@ Ans: Multiprocessing has an efficient handling mechanism for CPU-intensive tasks
 6. How did your group apply creative coding or algorithmic solutions in this lab? 
 
 Ans: Our group demonstrated creativity by designing the code in a way that the input, computation, and timing aspects are organized well, making the program easy to read and understand. We also enhanced the way the program displays the results by indicating whether the result was obtained from threads or processes, in addition to the use of loops and ability to dynamically create threads and processes instead of hardcoding the values, which would make the program easy to scale if handling more grades.
+
+# Third Labaratory
+1. Differentiate Task and Data Parallelism. Identify which part of the lab
+demonstrates each and justify the workload division.
+
+Ans: Data Parallelism:
+Definition: The same task is applied to different pieces of data simultaneously.
+Example in lab: 
+with ProcessPoolExecutor() as executor:
+    results = list(executor.map(compute_payroll, EMPLOYEES))
+
+Justification of workload division:
+Each employee’s payroll is computed independently. Each process takes one employee, calculates the deductions, and returns the result. The work is divided based on the dataset (employees).
+
+Task Parallelism:
+Definition: Different tasks are executed simultaneously, often on the same data.
+
+Example in lab:
+future_sss = executor.submit(compute_sss, salary)
+future_philhealth = executor.submit(compute_philhealth, salary)
+future_pagibig = executor.submit(compute_pagibig, salary)
+future_tax = executor.submit(compute_tax, salary)
+
+Justification of workload division:
+Each deduction computation (SSS, PhilHealth, Pag-IBIG, Tax) is independent and can run concurrently. The work is divided based on tasks/functions, not the dataset.
+
+2. Explain how concurrent.futures managed execution, including submit(),
+map(), and Future objects. Discuss the purpose of with when creating an
+Executor.
+
+Ans: Executor Objects:
+ProcessPoolExecutor() and ThreadPoolExecutor() manage a pool of worker processes or threads. They handle scheduling, execution, and returning results.
+
+submit() Method:
+Schedules a single task for execution.
+Returns a Future object, which represents a pending result.
+Example:
+future_sss = executor.submit(compute_sss, salary)
+sss = future_sss.result()
+
+map() Method:
+Schedules the same function on multiple data items at once.
+Returns an iterator of results.
+Example:
+results = list(executor.map(compute_payroll, EMPLOYEES))
+
+Future Objects:
+Represent a task that may not be completed yet.
+.result() blocks until the computation is finished and retrieves the result.
+
+Purpose of with Statement:
+Automatically manages resource allocation for the executor.
+Ensures that all threads or processes are properly cleaned up after use.
+Equivalent to:
+executor = ThreadPoolExecutor()
+try:
+    # do work
+finally:
+    executor.shutdown()
+
+3. Analyze ThreadPoolExecutor execution in relation to the GIL and CPU cores. Did
+true parallelism occur?
+
+Ans: GIL (Global Interpreter Lock):
+Python threads cannot execute Python bytecode in true parallel on multiple CPU cores because of the GIL.
+ThreadPoolExecutor is best for I/O-bound tasks (like network calls, file operations), not CPU-heavy tasks.
+
+In task parallelism code:
+Deduction computations are lightweight CPU-bound tasks.
+Threads may run concurrently, but true CPU parallelism did not occur. They were interleaved by the Python interpreter, not executed simultaneously on multiple cores.
+
+In contrast, ProcessPoolExecutor:
+Uses separate processes, each with its own Python interpreter.
+True parallelism occurs, fully utilizing multiple CPU cores for data parallel tasks like payroll computation.
+
+4. Explain why ProcessPoolExecutor enables true parallelism, including memory
+space separation and GIL behavior.
+
+Ans:
+
+5. Evaluate scalability if the system increases from 5 to 10,000 employees. Which
+approach scales better and why?
+
+Ans:
+
+6. Provide a real-world payroll system example. Indicate where Task Parallelism and
+Data Parallelism would be applied, and which executor you would use.
+
+Ans:
