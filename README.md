@@ -113,4 +113,7 @@ Ans:If the system increases from 5 to 10,000 employees, Data Parallelism using P
 6. Provide a real-world payroll system example. Indicate where Task Parallelism and
 Data Parallelism would be applied, and which executor you would use.
 
+Ans:
+
+...
 Ans:In a real-world payroll system, Task Parallelism can be applied when computing different salary components for a single employee, such as government deductions, company benefits, bonuses, and taxes simultaneously. In this case, ThreadPoolExecutor may be used, especially if some computations involve database or API calls (I/O-bound tasks). On the other hand, Data Parallelism would be used when processing payroll for thousands of employees at once, since each employee’s payroll is independent. For this scenario, ProcessPoolExecutor is more appropriate because it allows true parallelism across CPU cores and handles large-scale computations more efficiently.
