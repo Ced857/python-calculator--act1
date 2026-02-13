@@ -3,6 +3,7 @@
 from multiprocessing import Process
 import time
 
+
 def compute_gwa_mp(grades):
 
     gwa = sum(grades) / len(grades)
